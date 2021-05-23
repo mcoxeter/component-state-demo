@@ -1,0 +1,47 @@
+@import '/src/palette.scss';
+
+.component {
+  outline: none;
+  border: none;
+  font-size: 16px;
+  box-sizing: border-box;
+  padding: 0;
+  color: $color-incomplete-text;
+
+  .button-ring {
+    margin: 2px;
+  }
+}
+
+.component.incomplete {
+  background-color: $color-incomplete-background;
+}
+
+.component.complete {
+  background-color: $color-complete-background;
+}
+
+/**
+  * Idle state
+  */
+.component[data-state='idle'] {
+  &:hover {
+    > .button-ring {
+      outline: $color-ring-outline solid 1px;
+      cursor: pointer;
+    }
+  }
+}
+
+/**
+  * Focused state
+  */
+.component[data-state='focused'] {
+  > .button-ring {
+    outline: $color-ring-outline solid 1px;
+    cursor: pointer;
+  }
+  &:active {
+    background-color: $color-complete-background;
+  }
+}

@@ -1,0 +1,43 @@
+.component {
+  display: flex;
+  flex-direction: column;
+
+  &.left {
+    align-items: flex-start;
+  }
+
+  &.right {
+    align-items: flex-end;
+  }
+
+  &.center {
+    align-items: center;
+  }
+
+  &.stretch {
+    align-items: stretch;
+  }
+
+  &.spacing-01du {
+    gap: 1px;
+  }
+  &.spacing-02du {
+    gap: 2px;
+  }
+
+  &.spacing-04du {
+    gap: 4px;
+  }
+
+  &.spacing-08du {
+    gap: 8px;
+  }
+
+  &.spacing-16du {
+    gap: 16px;
+  }
+
+  &.spacing-32du {
+    gap: 32px;
+  }
+}

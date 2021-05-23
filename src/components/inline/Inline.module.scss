@@ -1,0 +1,44 @@
+.component {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 0px;
+
+  &.top {
+    align-items: flex-start;
+  }
+
+  &.bottom {
+    align-items: flex-end;
+  }
+
+  &.center {
+    align-items: center;
+  }
+
+  &.stretch {
+    align-items: stretch;
+  }
+
+  &.spacing-01du {
+    gap: 1px;
+  }
+  &.spacing-02du {
+    gap: 2px;
+  }
+
+  &.spacing-04du {
+    gap: 4px;
+  }
+
+  &.spacing-08du {
+    gap: 8px;
+  }
+
+  &.spacing-16du {
+    gap: 16px;
+  }
+
+  &.spacing-32du {
+    gap: 32px;
+  }
+}

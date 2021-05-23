@@ -1,0 +1,8 @@
+@import '/src/palette.scss';
+
+.component {
+  display: flex;
+  align-items: center;
+  background-color: $color-incomplete-background;
+  color: $color-incomplete-text;
+}
