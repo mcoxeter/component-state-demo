@@ -4,24 +4,23 @@ import styles from './Name.module.scss';
 import { NameTop } from './NameTop';
 import { NameData, nameMachine } from './Name.statemachine';
 import { useMachine } from '@xstate/react';
-export interface NameProps {}
+import { NameProps, toDataState } from './NameProps';
+
 export const Name: FC<NameProps> = (props) => {
-  const [machine, setMachine] = useMachine(nameMachine);
+  const [machine, send] = useMachine(nameMachine);
   const [firstName, setFirstName] = useState('');
   const [surname, setSurname] = useState('');
 
   useEffect(() => {
     const data: NameData = { firstName, surname };
-    setMachine({ type: 'CHANGE_DATA', data });
-  }, [setMachine, firstName, surname]);
-
-  const states = asValuesCombinded(machine.value);
-  console.log(states);
+    send({ type: 'CHANGE_DATA', data });
+  }, [send, firstName, surname]);
 
   return (
-    <div className={styles['component']}>
-      <NameTop caption='Name' />
+    <div className={styles['component']} {...toDataState(machine.value)}>
+      <NameTop machine={machine} caption='Name' send={send} />
       <NameBottom
+        machine={machine}
         firstName={firstName}
         surname={surname}
         onChangeFirstName={(value) => setFirstName(value)}
@@ -30,7 +29,3 @@ export const Name: FC<NameProps> = (props) => {
     </div>
   );
 };
-
-function asValuesCombinded(obj: {}): string[] {
-  return Object.values(obj).flatMap((x) => (x as String).split('_'));
-}

@@ -5,27 +5,28 @@ export const buttonMachine = Machine({
     inert: {
       on: {
         IDLE: 'idle',
-        DISABLED: 'disabled',
-      },
+        DISABLED: 'disabled'
+      }
     },
     idle: {
       on: {
         FOCUS: 'focused',
         DISABLED: 'disabled',
-        INERT: 'inert',
-      },
+        INERT: 'inert'
+      }
     },
     focused: {
       on: {
         BLUR: 'idle',
         DISABLED: 'disabled',
-        INERT: 'inert',
-      },
+        INERT: 'inert'
+      }
     },
     disabled: {
       on: {
         ENABLE: 'idle',
-      },
-    },
-  },
+        IDLE: 'idle'
+      }
+    }
+  }
 });

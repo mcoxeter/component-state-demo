@@ -74,16 +74,16 @@ export const nameMachine = Machine({
         stepInprogress_dataComplete_unLocked: {
           on: {
             CHANGE_DATA: changeData,
-            LOCK: 'stepInprogress_completeData_locked'
+            LOCK: 'stepInprogress_dataComplete_locked'
           }
         },
-        stepInprogress_completeData_locked: {
+        stepInprogress_dataComplete_locked: {
           on: {
-            STEP_COMPLETE: 'stepComplete_completeData_locked',
+            STEP_COMPLETE: 'stepComplete_dataComplete_locked',
             UN_LOCK: 'stepInprogress_dataComplete_unLocked'
           }
         },
-        stepComplete_completeData_locked: {
+        stepComplete_dataComplete_locked: {
           on: { STEP_INPROGRES: 'stepInprogress_dataComplete_unLocked' }
         }
       }

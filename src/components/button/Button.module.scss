@@ -45,3 +45,12 @@
     background-color: $color-complete-background;
   }
 }
+
+/**
+  * Disabled state
+  */
+.component[data-state='disabled'] {
+  outline: none;
+  color: $color-font-disabled;
+  cursor: not-allowed;
+}
