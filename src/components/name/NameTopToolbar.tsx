@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import { FC } from 'react';
 import styles from './NameTopToolbar.module.scss';
 import { Inline } from '../inline/Inline';
 import { Button, ButtonInitialState, ButtonKind } from '../button/Button';

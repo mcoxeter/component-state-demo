@@ -1,5 +1,4 @@
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
-import React, { FC } from 'react';
+import { FC } from 'react';
 import { Icon } from '../icon/Icon';
 import { Inline } from '../inline/Inline';
 import styles from './NameBottom.module.scss';
