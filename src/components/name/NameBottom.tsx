@@ -1,3 +1,4 @@
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import React, { FC } from 'react';
 import { Icon } from '../icon/Icon';
 import { Inline } from '../inline/Inline';
@@ -14,7 +15,6 @@ export interface NameBottomProps {
 export const NameBottom: FC<NameBottomProps> = (props) => {
   const stateString = toStateString(props.machine.value);
   const attributes = stateString.match(/locked/g) ? { disabled: true } : {};
-
   const renderDrawOpen = () => (
     <>
       <div>
@@ -28,7 +28,7 @@ export const NameBottom: FC<NameBottomProps> = (props) => {
             autoComplete={'off'}
             onChange={(e) => props.onChangeFirstName(e.target.value)}
           />
-          <Icon icon={['far', 'circle']} />
+          {renderCheck(props.firstName)}
         </Inline>
       </div>
       <div>
@@ -42,7 +42,7 @@ export const NameBottom: FC<NameBottomProps> = (props) => {
             value={props.surname}
             onChange={(e) => props.onChangeSurname(e.target.value)}
           />
-          <Icon icon={['far', 'circle']} />
+          {renderCheck(props.surname)}
         </Inline>
       </div>
     </>
@@ -64,3 +64,11 @@ export const NameBottom: FC<NameBottomProps> = (props) => {
     </form>
   );
 };
+
+function renderCheck(value: string) {
+  return value.length > 0 ? (
+    <Icon icon={['far', 'check-circle']} />
+  ) : (
+    <div className={styles['spacer']}></div>
+  );
+}

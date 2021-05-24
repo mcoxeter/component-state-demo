@@ -7,14 +7,6 @@
   color: $color-incomplete-text;
 }
 
-// .component[data-state='stepInprogress_dataIncomplete_unLocked_drawClosed'] {
-//   background-color: red;
-// }
-
-// .component[data-state='stepInprogress_dataComplete_unLocked_drawClosed'] {
-//   background-color: purple;
-// }
-
 .component[data-state*='stepComplete'] {
   background-color: $color-complete-background;
 }

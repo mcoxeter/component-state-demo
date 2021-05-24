@@ -2,3 +2,15 @@
   display: flex;
   gap: 5px;
 }
+
+.workflow[data-state*='stepComplete'] {
+  //  background-color: $color-complete-background;
+}
+
+.workflow[data-state*='stepInComplete'] {
+  //  background-color: $color-complete-background;
+}
+
+.lock[data-state*='stepComplete'] {
+  color: transparent;
+}

@@ -31,24 +31,28 @@ export const NameTopToolbar: FC<NameTopToolbarProps> = ({ machine, send }) => {
   return (
     <div className={styles['component']} {...toDataState(machine.value)}>
       <Inline align='center' spacing='08du'>
-        <Button
-          kind={buttonKind}
-          initialState={getLockedButtonState(machine)}
-          onClick={() => changeLockedState(machine, send)}
-        >
-          <Inline padding={'4px'}>
-            <Icon icon={lockedIconProp} />
-          </Inline>
-        </Button>
-        <Button
-          kind={buttonKind}
-          initialState={getWorkflowButtonState(machine)}
-          onClick={() => changeWorkflowState(machine, send)}
-        >
-          <Inline padding={'4px'}>
-            <Icon icon={workflowIconProp} />
-          </Inline>
-        </Button>
+        <div className={styles['workflow']}>
+          <Button
+            kind={buttonKind}
+            initialState={getLockedButtonState(machine)}
+            onClick={() => changeLockedState(machine, send)}
+          >
+            <Inline padding={'4px'}>
+              <Icon icon={lockedIconProp} />
+            </Inline>
+          </Button>
+        </div>
+        <div className={styles['lock']}>
+          <Button
+            kind={buttonKind}
+            initialState={getWorkflowButtonState(machine)}
+            onClick={() => changeWorkflowState(machine, send)}
+          >
+            <Inline padding={'4px'}>
+              <Icon icon={workflowIconProp} />
+            </Inline>
+          </Button>
+        </div>
       </Inline>
     </div>
   );
@@ -82,5 +86,8 @@ function changeWorkflowState(machine: MachineType, send: MachineSend): void {
 
   if (action === 'STEP_COMPLETE') {
     send({ type: 'CLOSE_DRAW' });
+  }
+  if (action === 'STEP_INPROGRES') {
+    send({ type: 'OPEN_DRAW' });
   }
 }

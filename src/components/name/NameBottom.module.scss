@@ -23,6 +23,15 @@
     outline: none;
     border-bottom: 2px solid $color-border-focused;
   }
+
+  .spacer {
+    min-width: 16px;
+    min-height: 21px;
+  }
+}
+
+.component[data-state*='locked'] {
+  background-color: $color-form-disabled;
 }
 
 .component[data-state*='drawClosed'] {

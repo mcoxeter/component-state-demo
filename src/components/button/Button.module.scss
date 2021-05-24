@@ -26,9 +26,9 @@
   */
 .component[data-state='idle'] {
   &:hover {
+    cursor: pointer;
     > .button-ring {
       outline: $color-ring-outline solid 1px;
-      cursor: pointer;
     }
   }
 }
@@ -37,10 +37,17 @@
   * Focused state
   */
 .component[data-state='focused'] {
-  > .button-ring {
-    outline: $color-ring-outline solid 1px;
+  &:hover {
     cursor: pointer;
+    > .button-ring {
+      outline: $color-ring-outline solid 1px;
+    }
   }
+
+  // > .button-ring {
+  //   outline: $color-ring-outline solid 1px;
+  //   cursor: pointer;
+  // }
   &:active {
     background-color: $color-complete-background;
   }
@@ -51,6 +58,5 @@
   */
 .component[data-state='disabled'] {
   outline: none;
-  color: $color-font-disabled;
   cursor: not-allowed;
 }
