@@ -1,40 +1,5 @@
 import { Machine } from 'xstate';
 
-// StepInprogress.NoData.UnLocked.DrawClosed (ENTRY)
-// 	Open
-
-// StepInprogress.ChangingData.UnLocked.DrawOpen
-// 	ProcessData
-
-// StepInprogress.NoData.UnLocked.DrawOpen
-// 	Close, ChangeData
-
-// StepInprogress.IncompleteData.UnLocked.DrawOpen
-// 	Close, ChangeData
-
-// StepInprogress.IncompleteData.UnLocked.DrawClosed
-// 	Open
-
-// StepInprogress.CompleteData.UnLocked.DrawOpen
-// 	Close, Lock, ChangeData
-
-// StepInprogress.CompleteData.Locked.DrawOpen
-// 	Close, UnLock, StepComplete
-
-// StepInprogress.CompleteData.Locked.DrawClosed
-// 	Open
-
-// StepComplete.CompleteData.Locked.DrawOpen
-// 	Close, StepIncomplete
-
-// StepComplete.CompleteData.Locked.DrawClosed
-// 	Open, StepIncomplete
-
-export interface NameData {
-  firstName: string;
-  surname: string;
-}
-
 const noData = (_: any, event: any) => {
   return (
     event?.data?.firstName.length === 0 && event?.data?.surname.length === 0

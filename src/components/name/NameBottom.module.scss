@@ -1,4 +1,5 @@
 @import '/src/palette.scss';
+@import '/src/animations.scss';
 
 .component {
   background-color: $color-form-background;
@@ -11,30 +12,97 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 19px;
   }
 
   input {
     width: 100%;
     border: none;
     border-bottom: 1px solid $color-border-nonfocused;
+    background-color: transparent;
   }
   input:focus {
     border: none;
     outline: none;
     border-bottom: 2px solid $color-border-focused;
   }
-
-  .spacer {
-    min-width: 16px;
-    min-height: 21px;
-  }
 }
 
+/** Lock and UnLock **/
 .component[data-state*='locked'] {
   background-color: $color-form-disabled;
 }
 
+/** Data Complete and InComplæete **/
+.component[data-state*='dataComplete'].component[data-state-previous*='dataIncomplete'] {
+  animation: dataComplete 0.4s ease-in-out;
+}
+
+.component[data-state*='dataIncomplete'].component[data-state-previous*='dataComplete'] {
+  animation: dataInComplete 0.4s ease-in-out;
+}
+
+/** Draw Open and Closing **/
 .component[data-state*='drawClosed'] {
-  padding: 4px;
-  height: 24px;
+  padding: 4px 4px 4px 16px;
+}
+
+.component[data-state*='drawClosed'].component[data-state-previous*='drawOpen']
+  .container {
+  animation: closeDraw 0.4s ease-in-out;
+}
+
+.component[data-state*='drawOpen'] .container {
+  animation: openDraw 0.4s ease-out;
+}
+
+/** Summary caption **/
+.component .summary-caption {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+/** Animation Keyframes **/
+
+@keyframes openDraw {
+  0% {
+    height: 19px;
+  }
+  70% {
+    height: 105px;
+  }
+  100% {
+    height: 100px;
+  }
+}
+
+@keyframes closeDraw {
+  0% {
+    height: 100px;
+  }
+  100% {
+    height: 19px;
+  }
+}
+
+@keyframes dataComplete {
+  0%,
+  100% {
+    background-color: $color-form-background;
+  }
+  50% {
+    background-color: #e5fbe3;
+  }
+}
+
+@keyframes dataInComplete {
+  0%,
+  100% {
+    background-color: $color-form-background;
+  }
+  50% {
+    background-color: #fcd1d1;
+  }
 }

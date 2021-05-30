@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { Icon } from '../icon/Icon';
 import { Inline } from '../inline/Inline';
+import { TextInput } from '../text-input/TextInput';
 import styles from './NameBottom.module.scss';
-import { MachineType, toDataState, toStateString } from './NameProps';
+import { StateWrapper } from './NameProps';
 export interface NameBottomProps {
-  machine: MachineType;
+  stateWrapper: StateWrapper;
   firstName: string;
   surname: string;
 
@@ -12,62 +13,37 @@ export interface NameBottomProps {
   onChangeSurname: (value: string) => void;
 }
 export const NameBottom: FC<NameBottomProps> = (props) => {
-  const stateString = toStateString(props.machine.value);
-  const attributes = stateString.match(/locked/g) ? { disabled: true } : {};
   const renderDrawOpen = () => (
     <>
-      <div>
-        <label htmlFor='fname'>Firstname</label>
-        <Inline spacing={'16du'}>
-          <input
-            {...attributes}
-            id='fname'
-            type='text'
-            value={props.firstName}
-            autoComplete={'off'}
-            onChange={(e) => props.onChangeFirstName(e.target.value)}
-          />
-          {renderCheck(props.firstName)}
-        </Inline>
-      </div>
-      <div>
-        <label htmlFor='sname'>Surname</label>
-        <Inline spacing={'16du'}>
-          <input
-            {...attributes}
-            id='sname'
-            type='text'
-            autoComplete={'off'}
-            value={props.surname}
-            onChange={(e) => props.onChangeSurname(e.target.value)}
-          />
-          {renderCheck(props.surname)}
-        </Inline>
-      </div>
+      <TextInput
+        id='fname'
+        disabled={props.stateWrapper.isLocked()}
+        caption='Firstname'
+        value={props.firstName}
+        onChangeValue={(e) => props.onChangeFirstName(e.target.value)}
+      />
+      <TextInput
+        id='sname'
+        disabled={props.stateWrapper.isLocked()}
+        caption='Surname'
+        value={props.surname}
+        onChangeValue={(e) => props.onChangeSurname(e.target.value)}
+      />
     </>
   );
   const renderDrawClosed = () => (
-    <Inline spacing={'04du'}>
-      <span>{props.firstName}</span>
-      <span>{props.surname}</span>
-    </Inline>
+    <span
+      className={styles['summary-caption']}
+    >{`${props.firstName} ${props.surname}`}</span>
   );
 
   return (
-    <form className={styles['component']} {...toDataState(props.machine.value)}>
+    <form className={styles['component']} {...props.stateWrapper.toDataState()}>
       <div className={styles['container']}>
-        {props.machine.matches({ drawer: 'drawOpen' })
+        {props.stateWrapper.machine.matches({ drawer: 'drawOpen' })
           ? renderDrawOpen()
           : renderDrawClosed()}
       </div>
     </form>
   );
 };
-
-function renderCheck(value: string) {
-  return value.length > 0 ? (
-    <Icon icon={['far', 'check-circle']} />
-  ) : (
-    <div className={styles['spacer']}></div>
-  );
-}

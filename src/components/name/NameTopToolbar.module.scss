@@ -1,8 +1,25 @@
+@import '/src/animations.scss';
+
 .component {
   display: flex;
   gap: 5px;
 }
 
-.lock[data-state*='stepComplete'] {
-  color: transparent;
+/** Lock and Unlocking **/
+.component[data-state*='stepComplete'] .lock {
+  display: none;
+}
+.component[data-state*='stepInComplete'] .lock {
+  display: auto;
+}
+
+.component[data-state*='locked'].component[data-state-previous*='unLocked']
+  .lock {
+  animation: shake 4s 0.2s ease-in-out;
+}
+
+/** Completing workflow **/
+.component[data-state*='stepComplete'].component[data-state-previous*='stepInprogress']
+  .workflow {
+  animation: pulse 1s 0.2s ease-in-out forwards;
 }

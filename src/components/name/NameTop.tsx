@@ -3,49 +3,41 @@ import { NameTopToolbar } from './NameTopToolbar';
 import styles from './NameTop.module.scss';
 import { Inline } from '../inline/Inline';
 import { Button, ButtonKind } from '../button/Button';
-import {
-  MachineSend,
-  MachineType,
-  toDataState,
-  toStateString
-} from './NameProps';
+import { StateWrapper } from './NameProps';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Icon } from '../icon/Icon';
 export interface NameTopProps {
-  machine: MachineType;
-  send: MachineSend;
+  stateWrapper: StateWrapper;
   caption: string;
 }
-export const NameTop: FC<NameTopProps> = ({ caption, machine, send }) => {
-  const state: string = toStateString(machine.value);
-  const lockedIconProp: IconProp = state.match(/drawClosed/g)
+export const NameTop: FC<NameTopProps> = ({ caption, stateWrapper }) => {
+  const drawIconProp: IconProp = stateWrapper.isDrawClosed()
     ? ['fas', 'angle-up']
     : ['fas', 'angle-down'];
-  const buttonKind: ButtonKind = state.match(/stepComplete/g)
+  const buttonKind: ButtonKind = stateWrapper.isStepComplete()
     ? 'complete'
     : 'incomplete';
 
   return (
-    <div className={styles['component']} {...toDataState(machine.value)}>
+    <div className={styles['component']} {...stateWrapper.toDataState()}>
       <Inline align='center' spacing='08du' padding='8px'>
         <Button
           initialState={'IDLE'}
           kind={buttonKind}
-          onClick={() => changeDrawState(machine, send)}
+          onClick={() => changeDrawState(stateWrapper)}
         >
-          <Inline padding={'4px'}>
-            <Icon icon={lockedIconProp} />
+          <Inline padding={'4px'} spacing={'08du'}>
+            <Icon icon={drawIconProp} />
+            <div>{caption}</div>
           </Inline>
         </Button>
-        <div>{caption}</div>
         <div style={{ flex: '1 1 auto' }} />
-        <NameTopToolbar machine={machine} send={send} />
+        <NameTopToolbar stateWrapper={stateWrapper} />
       </Inline>
     </div>
   );
 };
-function changeDrawState(machine: MachineType, send: MachineSend): void {
-  const stateString = toStateString(machine.value);
-  const action = stateString.match(/drawClosed/g) ? 'OPEN_DRAW' : 'CLOSE_DRAW';
-  send({ type: action });
+function changeDrawState(stateWrapper: StateWrapper): void {
+  const action = stateWrapper.isDrawClosed() ? 'OPEN_DRAW' : 'CLOSE_DRAW';
+  stateWrapper.send(action);
 }

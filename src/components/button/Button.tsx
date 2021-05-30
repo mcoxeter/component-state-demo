@@ -50,7 +50,7 @@ export let Button: FC<PropsWithChildren<ButtonProps>> = (
 
 Button.defaultProps = {
   kind: 'incomplete',
-  initialState: 'IDLE',
+  initialState: 'IDLE'
 };
 
 function Ring(props: React.PropsWithChildren<ButtonProps>) {

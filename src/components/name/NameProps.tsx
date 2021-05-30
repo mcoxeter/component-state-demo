@@ -2,13 +2,19 @@ import { AnyEventObject, State } from 'xstate';
 import { IDatastate } from '../data-state';
 export interface NameProps {}
 
-export type MachineType = State<
+export interface NameData {
+  firstName: string;
+  surname: string;
+}
+
+export type Machine = State<
   any,
   AnyEventObject,
   any,
   { value: any; context: any }
 >;
 
+export type Send = (type: string, data?: {}) => void;
 export type MachineSend = (payload: { type: string; data?: {} }) => void;
 
 export interface IState {
@@ -21,10 +27,41 @@ export function toStateString(machineValue: {}): string {
   return `${stateValue.workflow}_${stateValue.drawer}`;
 }
 
-export function toDataState(machineValue: {}): IDatastate {
-  return { 'data-state': toStateString(machineValue) };
-}
+export class StateWrapper {
+  constructor(
+    public machine: Machine,
+    public send: Send,
+    public previousState: string
+  ) {}
 
-export function toStateArray(machineValue: {}): string[] {
-  return toStateString(machineValue).split('_');
+  public toDataState(): IDatastate {
+    return {
+      'data-state': this.toString(),
+      'data-state-previous': this.previousState
+    };
+  }
+  public toString(): string {
+    return toStateString(this.machine.value);
+  }
+
+  public isLocked(): boolean {
+    return toStateString(this.machine.value).match(/locked/g) ? true : false;
+  }
+
+  public isDataComplete(): boolean {
+    return toStateString(this.machine.value).match(/dataComplete/g)
+      ? true
+      : false;
+  }
+
+  public isStepComplete(): boolean {
+    return toStateString(this.machine.value).match(/stepComplete/g)
+      ? true
+      : false;
+  }
+  public isDrawClosed(): boolean {
+    return toStateString(this.machine.value).match(/drawClosed/g)
+      ? true
+      : false;
+  }
 }

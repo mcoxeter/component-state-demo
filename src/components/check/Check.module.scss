@@ -1,0 +1,12 @@
+@import '/src/palette.scss';
+@import '/src/animations.scss';
+
+.check-icon {
+  color: $color-complete-background;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.uncheck-icon {
+  color: $color-complete-background;
+  opacity: 0;
+}
