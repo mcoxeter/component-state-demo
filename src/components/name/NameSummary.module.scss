@@ -1,0 +1,16 @@
+@import '/src/palette.scss';
+
+.component {
+  background-color: $color-form-background;
+  box-sizing: border-box;
+  color: $color-form-font;
+  display: flex;
+  flex-direction: column;
+}
+
+.ellipsis {
+  padding: 4px 16px 4px 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

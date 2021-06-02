@@ -1,0 +1,138 @@
+@import '/src/palette.scss';
+@import '/src/animations.scss';
+
+$max-height: 160px;
+$min-height: 27px;
+$fade-duration: 0.2s;
+$open-close-duration: 0.2s;
+
+.component .drawer-area {
+  min-height: $min-height;
+  background-color: $color-form-background;
+}
+
+.component .drawer-top {
+  display: block;
+}
+
+.component[data-state='closedAreaFadingOut'] {
+  & .drawer-area {
+    height: $min-height;
+  }
+  & .closed-area {
+    display: block;
+    animation: fadeOut $fade-duration ease-in-out;
+    opacity: 0;
+  }
+  & .open-area {
+    display: none;
+  }
+}
+
+.component[data-state='drawOpening'] {
+  & .drawer-area {
+    height: $max-height;
+    animation: openDraw $open-close-duration ease-in-out;
+  }
+  & .closed-area {
+    display: none;
+  }
+  & .open-area {
+    opacity: 0;
+    display: block;
+  }
+}
+
+.component[data-state='openAreaFadingIn'] {
+  & .drawer-area {
+    height: $max-height;
+  }
+  & .open-area {
+    opacity: 1;
+    display: block;
+    animation: fadeIn $fade-duration ease-in-out;
+  }
+  & .closed-area {
+    display: none;
+  }
+}
+
+.component[data-state='open'] {
+  & .drawer-area {
+    height: $max-height;
+  }
+  & .open-area {
+    opacity: 1;
+    display: block;
+  }
+  & .closed-area {
+    display: none;
+  }
+}
+
+.component[data-state='openAreaFadingOut'] {
+  & .drawer-area {
+    height: $max-height;
+  }
+  & .open-area {
+    display: block;
+    animation: fadeOut $fade-duration ease-in-out;
+    opacity: 0;
+  }
+  & .closed-area {
+    display: none;
+  }
+}
+
+.component[data-state='drawClosing'] {
+  & .drawer-area {
+    animation: closeDraw $open-close-duration ease-in-out;
+    height: $min-height;
+  }
+  & .open-area {
+    display: block;
+    opacity: 0;
+  }
+  & .closed-area {
+    display: none;
+  }
+}
+
+.component[data-state='closedAreaFadingIn'] {
+  & .drawer-area {
+    height: $min-height;
+  }
+  & .open-area {
+    display: none;
+  }
+  & .closed-area {
+    display: block;
+    animation: fadeIn $fade-duration ease-in-out;
+  }
+}
+
+.component[data-state='closed'] {
+  .close-area {
+    display: block;
+  }
+  .open-area {
+    display: none;
+  }
+}
+@keyframes openDraw {
+  0% {
+    height: $min-height;
+  }
+  100% {
+    height: $max-height;
+  }
+}
+
+@keyframes closeDraw {
+  0% {
+    height: $max-height;
+  }
+  100% {
+    height: $min-height;
+  }
+}

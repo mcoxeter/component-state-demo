@@ -5,6 +5,10 @@
   align-items: center;
   background-color: $color-incomplete-background;
   color: $color-incomplete-text;
+
+  .expander {
+    flex: 1 1 auto;
+  }
 }
 
 .component[data-state*='stepComplete'] {

@@ -10,7 +10,7 @@ export interface ButtonProps {
 
   /** Sets the initial state of the button. */
 
-  initialState: ButtonInitialState;
+  state?: ButtonInitialState;
 
   /** The kind of button. */
   kind?: ButtonKind;
@@ -50,7 +50,7 @@ export let Button: FC<PropsWithChildren<ButtonProps>> = (
 
 Button.defaultProps = {
   kind: 'incomplete',
-  initialState: 'IDLE'
+  state: 'IDLE'
 };
 
 function Ring(props: React.PropsWithChildren<ButtonProps>) {

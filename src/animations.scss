@@ -7,6 +7,15 @@
   }
 }
 
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
 @keyframes shake {
   0% {
     transform: rotate(0);
@@ -90,5 +99,15 @@
   }
   50% {
     transform: scale(1.5);
+  }
+}
+
+@keyframes mini-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
   }
 }
