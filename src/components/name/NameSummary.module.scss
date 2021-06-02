@@ -1,5 +1,4 @@
 @import '/src/palette.scss';
-@import '/src/animations.scss';
 
 .component {
   background-color: $color-form-background;
@@ -9,8 +8,7 @@
   flex-direction: column;
 }
 
-.truncate {
-  animation: fadeIn 0.5s ease-in-out;
+.ellipsis {
   padding: 4px 16px 4px 16px;
   white-space: nowrap;
   overflow: hidden;
