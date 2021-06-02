@@ -1,0 +1,18 @@
+@import '/src/palette.scss';
+@import '/src/animations.scss';
+
+.component {
+  background-color: $color-form-background;
+  box-sizing: border-box;
+  color: $color-form-font;
+  display: flex;
+  flex-direction: column;
+}
+
+.truncate {
+  animation: fadeIn 0.5s ease-in-out;
+  padding: 4px 16px 4px 16px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

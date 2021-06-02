@@ -26,8 +26,8 @@ export function ButtonLogic(props: ButtonLogicProps): JSX.Element {
   };
 
   React.useEffect(() => {
-    setMachine({ type: props.initialState });
-  }, [props.initialState, setMachine]);
+    setMachine({ type: props?.state ?? 'incomplete' });
+  }, [props.state, setMachine]);
 
   React.useEffect(() => {
     if (props.applyFocus && props.buttonRef) {
@@ -39,7 +39,7 @@ export function ButtonLogic(props: ButtonLogicProps): JSX.Element {
     onBlur: () => setState('BLUR'),
     onFocus: () => setState('FOCUS'),
     onClick: props.onClick,
-    disabled: machine.matches('disabled') || machine.matches('inert'),
+    disabled: machine.matches('disabled') || machine.matches('inert')
   };
 
   return props.children(`${machine.value}`, prevState, spreadAttributes);

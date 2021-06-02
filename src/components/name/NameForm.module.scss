@@ -1,0 +1,58 @@
+@import '/src/palette.scss';
+
+.component {
+  background-color: $color-form-background;
+  padding: 24px 16px 35px 40px;
+  box-sizing: border-box;
+  color: $color-form-font;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  input {
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid $color-border-nonfocused;
+    background-color: transparent;
+  }
+  input:focus {
+    border: none;
+    outline: none;
+    border-bottom: 2px solid $color-border-focused;
+  }
+}
+
+/** Lock and UnLock **/
+.component[data-state*='locked'] {
+  background-color: $color-form-disabled;
+}
+
+/** Data Complete and InComplæete **/
+.component[data-state*='dataComplete'].component[data-state-previous*='dataIncomplete'] {
+  animation: dataComplete 0.4s ease-in-out;
+}
+
+.component[data-state*='dataIncomplete'].component[data-state-previous*='dataComplete'] {
+  animation: dataInComplete 0.4s ease-in-out;
+}
+
+@keyframes dataComplete {
+  0%,
+  100% {
+    background-color: $color-form-background;
+  }
+  50% {
+    background-color: #e5fbe3;
+  }
+}
+
+@keyframes dataInComplete {
+  0%,
+  100% {
+    background-color: $color-form-background;
+  }
+  50% {
+    background-color: #fcd1d1;
+  }
+}

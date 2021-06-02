@@ -27,7 +27,7 @@ export function toStateString(machineValue: {}): string {
   return `${stateValue.workflow}_${stateValue.drawer}`;
 }
 
-export class StateWrapper {
+export class NameMachine {
   constructor(
     public machine: Machine,
     public send: Send,
@@ -63,5 +63,9 @@ export class StateWrapper {
     return toStateString(this.machine.value).match(/drawClosed/g)
       ? true
       : false;
+  }
+
+  public get nameData(): NameData {
+    return this.machine.context.data;
   }
 }

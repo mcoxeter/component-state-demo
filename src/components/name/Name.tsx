@@ -1,45 +1,47 @@
-import { FC, useEffect, useState } from 'react';
-import { NameBottom } from './NameBottom';
+import { FC, useState } from 'react';
 import styles from './Name.module.scss';
 import { NameTop } from './NameTop';
 import { nameMachine } from './Name.statemachine';
-import { NameProps, StateWrapper, toStateString } from './NameProps';
+import { NameProps, NameMachine, toStateString } from './NameProps';
 import { useMachine } from '@xstate/react';
-
+import { Drawer } from '../drawer/Drawer';
+import { DrawerOpened } from '../drawer/DrawerOpened';
+import { DrawerClosed } from '../drawer/DrawerClosed';
+import { DrawerTop } from '../drawer/DrawerTop';
+import { NameForm } from './NameForm';
+import { NameSummary } from './NameSummary';
 export const Name: FC<NameProps> = (props) => {
   /** The state machine. This is passed between all the components that work together. */
   const [machine, _send] = useMachine(nameMachine);
 
-  const [firstName, setFirstName] = useState('');
-  const [surname, setSurname] = useState('');
-
   const [prevState, setPrevState] = useState('');
+
+  /** This send also keeps track of the previous state */
   const send = (type: string, data?: {}): void => {
     setPrevState(toStateString(machine.value));
     _send({ type, data });
   };
 
-  useEffect(
-    () => {
-      send('CHANGE_DATA', { firstName, surname });
-      console.log('Here');
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [firstName, surname]
-  );
+  const state: NameMachine = new NameMachine(machine, send, prevState);
 
-  const stateWrapper: StateWrapper = new StateWrapper(machine, send, prevState);
+  let isDrawOpem = !state.isDrawClosed();
+  let wasDrawOpen = state.previousState.match(/drawOpen/) ? true : false;
 
   return (
-    <div className={styles['component']} {...stateWrapper.toDataState()}>
-      <NameTop stateWrapper={stateWrapper} caption='Name' />
-      <NameBottom
-        stateWrapper={stateWrapper}
-        firstName={firstName}
-        surname={surname}
-        onChangeFirstName={(value) => setFirstName(value)}
-        onChangeSurname={(value) => setSurname(value)}
-      ></NameBottom>
+    <div className={styles['component']} {...state.toDataState()}>
+      <Drawer open={isDrawOpem} wasOpen={wasDrawOpen}>
+        <DrawerTop>
+          <NameTop state={state} />
+        </DrawerTop>
+        <DrawerOpened>
+          <NameForm state={state} />
+        </DrawerOpened>
+        <DrawerClosed>
+          <NameSummary state={state} />
+        </DrawerClosed>
+      </Drawer>
     </div>
   );
 };
+
+Name.displayName = 'Name';

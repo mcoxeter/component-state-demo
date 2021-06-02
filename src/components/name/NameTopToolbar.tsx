@@ -2,11 +2,11 @@ import { FC } from 'react';
 import styles from './NameTopToolbar.module.scss';
 import { Inline } from '../inline/Inline';
 import { Button, ButtonInitialState, ButtonKind } from '../button/Button';
-import { StateWrapper } from './NameProps';
+import { NameMachine } from './NameProps';
 import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { Icon } from '../icon/Icon';
 export interface NameTopToolbarProps {
-  stateWrapper: StateWrapper;
+  stateWrapper: NameMachine;
 }
 export const NameTopToolbar: FC<NameTopToolbarProps> = ({ stateWrapper }) => {
   const isComplete = stateWrapper.isStepComplete();
@@ -27,7 +27,7 @@ export const NameTopToolbar: FC<NameTopToolbarProps> = ({ stateWrapper }) => {
         <div className={styles['lock']}>
           <Button
             kind={buttonKind}
-            initialState={getLockedButtonState(stateWrapper)}
+            state={getLockedButtonState(stateWrapper)}
             onClick={() => changeLockedState(stateWrapper)}
           >
             <Inline padding={'4px'}>
@@ -38,7 +38,7 @@ export const NameTopToolbar: FC<NameTopToolbarProps> = ({ stateWrapper }) => {
         <div className={styles['workflow']}>
           <Button
             kind={buttonKind}
-            initialState={getWorkflowButtonState(stateWrapper)}
+            state={getWorkflowButtonState(stateWrapper)}
             onClick={() => changeWorkflowState(stateWrapper)}
           >
             <Inline padding={'4px'}>
@@ -51,7 +51,7 @@ export const NameTopToolbar: FC<NameTopToolbarProps> = ({ stateWrapper }) => {
   );
 };
 
-function getLockedButtonState(stateWrapper: StateWrapper): ButtonInitialState {
+function getLockedButtonState(stateWrapper: NameMachine): ButtonInitialState {
   const result =
     !stateWrapper.isStepComplete() && stateWrapper.isDataComplete()
       ? 'IDLE'
@@ -59,19 +59,17 @@ function getLockedButtonState(stateWrapper: StateWrapper): ButtonInitialState {
   return result;
 }
 
-function getWorkflowButtonState(
-  stateWrapper: StateWrapper
-): ButtonInitialState {
+function getWorkflowButtonState(stateWrapper: NameMachine): ButtonInitialState {
   return stateWrapper.isDataComplete() && stateWrapper.isLocked()
     ? 'IDLE'
     : 'DISABLED';
 }
 
-function changeLockedState(stateWrapper: StateWrapper): void {
+function changeLockedState(stateWrapper: NameMachine): void {
   stateWrapper.send(stateWrapper.isLocked() ? 'UN_LOCK' : 'LOCK');
 }
 
-function changeWorkflowState(stateWrapper: StateWrapper): void {
+function changeWorkflowState(stateWrapper: NameMachine): void {
   const action = stateWrapper.isStepComplete()
     ? 'STEP_INPROGRES'
     : 'STEP_COMPLETE';

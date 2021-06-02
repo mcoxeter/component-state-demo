@@ -2,42 +2,37 @@ import React, { FC } from 'react';
 import { NameTopToolbar } from './NameTopToolbar';
 import styles from './NameTop.module.scss';
 import { Inline } from '../inline/Inline';
-import { Button, ButtonKind } from '../button/Button';
-import { StateWrapper } from './NameProps';
-import { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { Button } from '../button/Button';
+import { NameMachine } from './NameProps';
 import { Icon } from '../icon/Icon';
 export interface NameTopProps {
-  stateWrapper: StateWrapper;
-  caption: string;
+  state: NameMachine;
 }
-export const NameTop: FC<NameTopProps> = ({ caption, stateWrapper }) => {
-  const drawIconProp: IconProp = stateWrapper.isDrawClosed()
-    ? ['fas', 'angle-up']
-    : ['fas', 'angle-down'];
-  const buttonKind: ButtonKind = stateWrapper.isStepComplete()
-    ? 'complete'
-    : 'incomplete';
+export const NameTop: FC<NameTopProps> = ({ state: stateWrapper }) => {
+  const isClosed = stateWrapper.isDrawClosed();
+  const complete = stateWrapper.isStepComplete();
+
+  const toggleDraw = () => {
+    stateWrapper.send(stateWrapper.isDrawClosed() ? 'OPEN_DRAW' : 'CLOSE_DRAW');
+  };
 
   return (
     <div className={styles['component']} {...stateWrapper.toDataState()}>
       <Inline align='center' spacing='08du' padding='8px'>
         <Button
-          initialState={'IDLE'}
-          kind={buttonKind}
-          onClick={() => changeDrawState(stateWrapper)}
+          kind={complete ? 'complete' : 'incomplete'}
+          onClick={toggleDraw}
         >
           <Inline padding={'4px'} spacing={'08du'}>
-            <Icon icon={drawIconProp} />
-            <div>{caption}</div>
+            <Icon icon={isClosed ? 'angle-up' : 'angle-down'} />
+            <div>Name</div>
           </Inline>
         </Button>
-        <div style={{ flex: '1 1 auto' }} />
+        <div className={styles['expander']} />
         <NameTopToolbar stateWrapper={stateWrapper} />
       </Inline>
     </div>
   );
 };
-function changeDrawState(stateWrapper: StateWrapper): void {
-  const action = stateWrapper.isDrawClosed() ? 'OPEN_DRAW' : 'CLOSE_DRAW';
-  stateWrapper.send(action);
-}
+
+NameTop.displayName = 'NameTop';
