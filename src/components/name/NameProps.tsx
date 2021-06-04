@@ -23,8 +23,16 @@ export interface IState {
 }
 
 export function toStateString(machineValue: {}): string {
+  const stateMap: { [key: string]: string } = {
+    empty: 'inComplete_empty_unLocked',
+    semi_filled: 'inComplete_semiFilled_unLocked',
+    filled: 'inComplete_filled_unLocked',
+    locked: 'inComplete_filled_locked',
+    complete: 'completed_filled_locked'
+  };
+
   const stateValue = machineValue as IState;
-  return `${stateValue.workflow}_${stateValue.drawer}`;
+  return `${stateMap[stateValue.workflow]}_${stateValue.drawer}`;
 }
 
 export class NameMachine {
@@ -48,16 +56,12 @@ export class NameMachine {
     return toStateString(this.machine.value).match(/locked/g) ? true : false;
   }
 
-  public isDataComplete(): boolean {
-    return toStateString(this.machine.value).match(/dataComplete/g)
-      ? true
-      : false;
+  public isFilled(): boolean {
+    return toStateString(this.machine.value).match(/Filled/g) ? true : false;
   }
 
-  public isStepComplete(): boolean {
-    return toStateString(this.machine.value).match(/stepComplete/g)
-      ? true
-      : false;
+  public iscompleted(): boolean {
+    return toStateString(this.machine.value).match(/completed/g) ? true : false;
   }
   public isDrawClosed(): boolean {
     return toStateString(this.machine.value).match(/drawClosed/g)

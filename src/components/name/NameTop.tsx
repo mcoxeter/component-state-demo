@@ -10,7 +10,7 @@ export interface NameTopProps {
 }
 export const NameTop: FC<NameTopProps> = ({ state: stateWrapper }) => {
   const isClosed = stateWrapper.isDrawClosed();
-  const complete = stateWrapper.isStepComplete();
+  const complete = stateWrapper.iscompleted();
 
   const toggleDraw = () => {
     stateWrapper.send(stateWrapper.isDrawClosed() ? 'OPEN_DRAW' : 'CLOSE_DRAW');

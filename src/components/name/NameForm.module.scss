@@ -29,15 +29,15 @@
 }
 
 /** Data Complete and InComplæete **/
-.component[data-state*='dataComplete'].component[data-state-previous*='dataIncomplete'] {
-  animation: dataComplete 0.4s ease-in-out;
+.component[data-state*='filled'].component[data-state-previous*='semiFilled'] {
+  animation: Filled 0.4s ease-in-out;
 }
 
-.component[data-state*='dataIncomplete'].component[data-state-previous*='dataComplete'] {
-  animation: dataInComplete 0.4s ease-in-out;
+.component[data-state*='semiFilled'].component[data-state-previous*='filled'] {
+  animation: semiFilled 0.4s ease-in-out;
 }
 
-@keyframes dataComplete {
+@keyframes Filled {
   0%,
   100% {
     background-color: $color-form-background;
@@ -47,7 +47,7 @@
   }
 }
 
-@keyframes dataInComplete {
+@keyframes semiFilled {
   0%,
   100% {
     background-color: $color-form-background;

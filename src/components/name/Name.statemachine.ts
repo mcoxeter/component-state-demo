@@ -1,12 +1,12 @@
 import { assign, Machine } from 'xstate';
 
-const noData = (_: any, event: any) => {
+const isEmpty = (_: any, event: any) => {
   return (
     event?.data?.firstName.length === 0 && event?.data?.surname.length === 0
   );
 };
 
-const completedData = (_: any, event: any) => {
+const isFilled = (_: any, event: any) => {
   return event?.data?.firstName.length > 0 && event?.data?.surname.length > 0;
 };
 const addData = assign<{}, any>({
@@ -15,17 +15,17 @@ const addData = assign<{}, any>({
 
 const changeData = [
   {
-    target: 'stepInprogress_dataNone_unLocked',
+    target: 'empty',
     actions: 'addData',
-    cond: noData
+    cond: isEmpty
   },
   {
-    target: 'stepInprogress_dataComplete_unLocked',
+    target: 'filled',
     actions: 'addData',
-    cond: completedData
+    cond: isFilled
   },
   {
-    target: 'stepInprogress_dataIncomplete_unLocked',
+    target: 'semi_filled',
     actions: 'addData'
   }
 ];
@@ -42,32 +42,32 @@ export const nameMachine = Machine(
     },
     states: {
       workflow: {
-        initial: 'stepInprogress_dataNone_unLocked',
+        initial: 'empty',
         states: {
-          stepInprogress_dataNone_unLocked: {
+          empty: {
             on: {
               CHANGE_DATA: changeData
             }
           },
-          stepInprogress_dataIncomplete_unLocked: {
+          semi_filled: {
             on: {
               CHANGE_DATA: changeData
             }
           },
-          stepInprogress_dataComplete_unLocked: {
+          filled: {
             on: {
               CHANGE_DATA: changeData,
-              LOCK: 'stepInprogress_dataComplete_locked'
+              LOCK: 'locked'
             }
           },
-          stepInprogress_dataComplete_locked: {
+          locked: {
             on: {
-              STEP_COMPLETE: 'stepComplete_dataComplete_locked',
-              UN_LOCK: 'stepInprogress_dataComplete_unLocked'
+              STEP_COMPLETE: 'complete',
+              UN_LOCK: 'filled'
             }
           },
-          stepComplete_dataComplete_locked: {
-            on: { STEP_INPROGRES: 'stepInprogress_dataComplete_unLocked' }
+          complete: {
+            on: { STEP_INPROGRES: 'filled' }
           }
         }
       },

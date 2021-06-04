@@ -9,7 +9,7 @@ export interface NameTopToolbarProps {
   stateWrapper: NameMachine;
 }
 export const NameTopToolbar: FC<NameTopToolbarProps> = ({ stateWrapper }) => {
-  const isComplete = stateWrapper.isStepComplete();
+  const isComplete = stateWrapper.iscompleted();
   const locked = stateWrapper.isLocked();
 
   const lockedIconProp: IconProp = ['fas', locked ? 'lock' : 'unlock'];
@@ -53,14 +53,14 @@ export const NameTopToolbar: FC<NameTopToolbarProps> = ({ stateWrapper }) => {
 
 function getLockedButtonState(stateWrapper: NameMachine): ButtonInitialState {
   const result =
-    !stateWrapper.isStepComplete() && stateWrapper.isDataComplete()
+    !stateWrapper.iscompleted() && stateWrapper.isFilled()
       ? 'IDLE'
       : 'DISABLED';
   return result;
 }
 
 function getWorkflowButtonState(stateWrapper: NameMachine): ButtonInitialState {
-  return stateWrapper.isDataComplete() && stateWrapper.isLocked()
+  return stateWrapper.isFilled() && stateWrapper.isLocked()
     ? 'IDLE'
     : 'DISABLED';
 }
@@ -70,7 +70,7 @@ function changeLockedState(stateWrapper: NameMachine): void {
 }
 
 function changeWorkflowState(stateWrapper: NameMachine): void {
-  const action = stateWrapper.isStepComplete()
+  const action = stateWrapper.iscompleted()
     ? 'STEP_INPROGRES'
     : 'STEP_COMPLETE';
   stateWrapper.send(action);

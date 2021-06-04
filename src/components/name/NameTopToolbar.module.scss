@@ -6,7 +6,7 @@
 }
 
 /** Lock and Unlocking **/
-.component[data-state*='stepComplete'] .lock {
+.component[data-state*='completed'] .lock {
   display: none;
 }
 .component[data-state*='stepInComplete'] .lock {
@@ -19,7 +19,7 @@
 }
 
 /** Completing workflow **/
-.component[data-state*='stepComplete'].component[data-state-previous*='stepInprogress']
+.component[data-state*='completed'].component[data-state-previous*='inComplete']
   .workflow {
   animation: pulse 1s 0.2s ease-in-out forwards;
 }

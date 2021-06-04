@@ -11,6 +11,6 @@
   }
 }
 
-.component[data-state*='stepComplete'] {
+.component[data-state*='completed'] {
   background-color: $color-complete-background;
 }
