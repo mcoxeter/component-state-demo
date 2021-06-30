@@ -57,7 +57,7 @@ export class NameMachine {
   }
 
   public isFilled(): boolean {
-    return toStateString(this.machine.value).match(/Filled/g) ? true : false;
+    return toStateString(this.machine.value).match(/filled/g) ? true : false;
   }
 
   public iscompleted(): boolean {
